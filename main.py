@@ -48,6 +48,27 @@ def show_summary(data):
     print(f"Total Sessions: {total_sessions}")
     print(f"Total Study Time: {total_minutes} minutes")
 
+def study_time_by_subject(data):
+    subject_totals = {}
+
+    for row in data:
+        subject = row[1]
+        duration = int(row[2])
+
+        if subject in subject_totals:
+            subject_totals[subject] += duration
+        else:
+            subject_totals[subject] =  duration
+    
+    return subject_totals
+
+def show_subject_analysis(subject_totals):
+    print("\nStudy Time by Subject")
+    print("-----------------------------")
+
+    for subject, minutes in subject_totals.items():
+        print(f"{subject}: {minutes} minutes")
+
 def main():
     print("Smart Study and Productivity Analyzer")
 
@@ -62,6 +83,8 @@ def main():
     data = read_study_data()
     show_summary(data)
 
+    subject_totals = study_time_by_subject(data)
+    show_subject_analysis(subject_totals)
     print("\nStudy Session recorded sucessfully")
 
 if __name__ == "__main__":
