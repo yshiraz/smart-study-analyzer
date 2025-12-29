@@ -123,7 +123,7 @@ def show_focus_insights(averages):
         print(f"{time}: Average focus = {avg:.2f}")
 
     best_time = max(averages, key=averages.get)
-    print(f"\n You focus best during: {best_time}")
+    print(f"\nYou focus best during: {best_time}")
 
 def load_data_pandas():
     columns = ["date", "subject", "duration", "time_of_day", "focus"]
@@ -143,31 +143,51 @@ def plot_study_time(df):
     plt.show()
 
 def main():
-    print("Smart Study and Productivity Analyzer")
+    while True:
+        print("\nSmart Study and Productivity Analyzer")
+        print("1. Add study session")
+        print("2. Show basic summary")
+        print("3. Study time per subject")
+        print("4. Most studied subject")
+        print("5. Focus Analysis")
+        print("6. Pandas Analysis")
+        print("7. Visual Representation")
+        print("8. Exit")
 
-    study_date = date.today().isoformat()
-    subject = input("Enter subject: ")
-    duration = get_duration()
-    time_of_day = input("Enter Time of Day (Morning/Afternoon/Night): ")
-    focus = get_focus()
-    
-    save_to_csv([study_date, subject, duration, time_of_day, focus])
+        choice = input("Choose an option (1-8): ")
 
-    data = read_study_data()
-    show_summary(data)
-
-    subject_totals = study_time_by_subject(data)
-    show_subject_analysis(subject_totals)
-    show_insights(subject_totals)
-
-    focus_data = focus_by_time_of_day(data)
-    averages = average_focus(focus_data)
-    show_focus_insights(averages)
-
-    df = load_data_pandas()
-    pandas_summary(df)
-    plot_study_time(df)
-    print("\nStudy Session recorded sucessfully")
+        if choice == "1":
+            study_date = date.today().isoformat()
+            subject = input("Enter subject: ")
+            duration = get_duration()
+            time_of_day = input("Enter Time of Day (Morning/Afternoon/Night): ")
+            focus = get_focus()
+            save_to_csv([study_date, subject, duration, time_of_day, focus])
+            print("\nStudy Session recorded sucessfully")
+        elif choice == "2":
+            data = read_study_data()
+            show_summary(data)
+        elif choice == "3":
+            subject_totals = study_time_by_subject(data)
+            show_subject_analysis(subject_totals)
+        elif choice == "4":
+            subject_totals = study_time_by_subject(data)
+            show_subject_analysis(subject_totals)
+            show_insights(subject_totals)
+        elif choice == "5":
+            focus_data = focus_by_time_of_day(data)
+            averages = average_focus(focus_data)
+            show_focus_insights(averages)
+        elif choice == "6":
+            df = load_data_pandas()
+            pandas_summary(df)
+        elif choice == "7":
+            plot_study_time(df)
+        elif choice == "8":
+            print("Exiting...")
+            break
+        else:
+            print("❌ Invalid choice. Please enter 1-8.")
 
 if __name__ == "__main__":
     main()
