@@ -69,6 +69,20 @@ def show_subject_analysis(subject_totals):
     for subject, minutes in subject_totals.items():
         print(f"{subject}: {minutes} minutes")
 
+def most_studied_subject(subject_totals):
+    if not subject_totals:
+        return None, 0
+    
+    subject = max(subject_totals, key=subject_totals.get)
+    return subject, subject_totals[subject]
+
+def show_insights(subject_totals):
+    subject, minutes = most_studied_subject(subject_totals)
+
+    if subject:
+        print("\nInsight")
+        print("-------------")
+        print(f"Most studied subject: {subject} ({minutes} minutes)")
 def main():
     print("Smart Study and Productivity Analyzer")
 
@@ -85,6 +99,7 @@ def main():
 
     subject_totals = study_time_by_subject(data)
     show_subject_analysis(subject_totals)
+    show_insights(subject_totals)
     print("\nStudy Session recorded sucessfully")
 
 if __name__ == "__main__":
