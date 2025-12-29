@@ -30,6 +30,24 @@ def save_to_csv(row):
         writer = csv.writer(file)
         writer.writerow(row)
 
+def read_study_data():
+    rows = []
+    with open("data/study_log.csv", mode="r") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            if row:
+                rows.append(row)
+    return rows
+
+def show_summary(data):
+    total_sessions = len(data)
+    total_minutes = sum(int(row[2]) for row in data)
+
+    print("\nStudy Summary")
+    print("----------------------")
+    print(f"Total Sessions: {total_sessions}")
+    print(f"Total Study Time: {total_minutes} minutes")
+
 def main():
     print("Smart Study and Productivity Analyzer")
 
@@ -40,6 +58,9 @@ def main():
     focus = get_focus()
     
     save_to_csv([study_date, subject, duration, time_of_day, focus])
+
+    data = read_study_data()
+    show_summary(data)
 
     print("\nStudy Session recorded sucessfully")
 
