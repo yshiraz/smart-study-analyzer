@@ -2,6 +2,7 @@ import csv
 from datetime import date
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 
 def get_duration():
     while True:
@@ -40,6 +41,7 @@ def read_study_data():
     rows = []
     with open("data/study_log.csv", mode="r") as file:
         reader = csv.reader(file)
+        next(reader, None)
         for row in reader:
             if row:
                 rows.append(row)
@@ -124,12 +126,21 @@ def show_focus_insights(averages):
     print(f"\n You focus best during: {best_time}")
 
 def load_data_pandas():
+    columns = ["date", "subject", "duration", "time_of_day", "focus"]
     return pd.read_csv("data/study_log.csv")
 
 def pandas_summary(df):
     print("\n Pandas Summary")
     print("-------------------")
     print(df.groupby("subject")["duration"].sum())
+
+def plot_study_time(df):
+    df.groupby("subject")["duration"].sum().plot(kind="bar")
+    plt.title("Study Time by Subject")
+    plt.ylabel("Minutes")
+    plt.xlabel("Subject")
+    plt.tight_layout()
+    plt.show()
 
 def main():
     print("Smart Study and Productivity Analyzer")
@@ -155,6 +166,7 @@ def main():
 
     df = load_data_pandas()
     pandas_summary(df)
+    plot_study_time(df)
     print("\nStudy Session recorded sucessfully")
 
 if __name__ == "__main__":
