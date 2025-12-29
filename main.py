@@ -1,34 +1,47 @@
 import csv
 from datetime import date
 
-print("Smart Study and Productivity Analyzer")
+def get_duration():
+    while True:
+        try:
+            duration = int(input("Enter study duration (minutes): "))
+            if duration <= 0:
+                print("Duration must be greater than 0.")
+                continue
+            return duration
+            break
+        except ValueError:
+            print("Please enter a valid number.")
 
-study_date = date.today().isoformat()
-subject = input("Enter subject: ")
-while True:
-    try:
-        duration = int(input("Enter study duration (minutes): "))
-        if duration <= 0:
-            print("Duration must be greater than 0.")
-            continue
-        break
-    except ValueError:
-        print("Please enter a valid number.")
+def get_focus():
+    while True:
+        try:
+            focus = int(input("Focus level (1-5): "))
+            if focus < 1 or focus > 5:
+                print("Focus must be between 1 and 5.")
+                continue
+            return focus
+            break
+        except ValueError:
+            print("Please enter a valid number")
 
-time_of_day = input("Enter Time of Day (Morning/Afternoon/Night): ")
+def save_to_csv(row):
+    with open("data/study_log.csv", mode='a', newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow(row)
 
-while True:
-    try:
-        focus = int(input("Focus level (1-5): "))
-        if focus < 1 or focus > 5:
-            print("Focus must be between 1 and 5.")
-            continue
-        break
-    except ValueError:
-        print("Please enter a valid number") 
+def main():
+    print("Smart Study and Productivity Analyzer")
 
-with open("data/study_log.csv", mode='a', newline="") as file:
-    writer = csv.writer(file)
-    writer.writerow([study_date, subject, duration, time_of_day, focus])
+    study_date = date.today().isoformat()
+    subject = input("Enter subject: ")
+    duration = get_duration()
+    time_of_day = input("Enter Time of Day (Morning/Afternoon/Night): ")
+    focus = get_focus()
+    
+    save_to_csv([study_date, subject, duration, time_of_day, focus])
 
-print("\nStudy Session recorded")
+    print("\nStudy Session recorded sucessfully")
+
+if __name__ == "__main__":
+    main()
