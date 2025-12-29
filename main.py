@@ -1,5 +1,7 @@
 import csv
 from datetime import date
+import pandas as pd
+import os
 
 def get_duration():
     while True:
@@ -26,8 +28,12 @@ def get_focus():
             print("Please enter a valid number")
 
 def save_to_csv(row):
+    file_exists = os.path.isfile("data/study_log.csv")
+
     with open("data/study_log.csv", mode='a', newline="") as file:
         writer = csv.writer(file)
+        if not file_exists:
+            writer.writerow(["date", "subject", "durations", "time_of_day", "focus"])
         writer.writerow(row)
 
 def read_study_data():
@@ -117,6 +123,14 @@ def show_focus_insights(averages):
     best_time = max(averages, key=averages.get)
     print(f"\n You focus best during: {best_time}")
 
+def load_data_pandas():
+    return pd.read_csv("data/study_log.csv")
+
+def pandas_summary(df):
+    print("\n Pandas Summary")
+    print("-------------------")
+    print(df.groupby("subject")["duration"].sum())
+
 def main():
     print("Smart Study and Productivity Analyzer")
 
@@ -138,6 +152,9 @@ def main():
     focus_data = focus_by_time_of_day(data)
     averages = average_focus(focus_data)
     show_focus_insights(averages)
+
+    df = load_data_pandas()
+    pandas_summary(df)
     print("\nStudy Session recorded sucessfully")
 
 if __name__ == "__main__":
