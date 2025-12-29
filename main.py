@@ -1,8 +1,9 @@
 import csv
+from datetime import date
 
 print("Smart Study and Productivity Analyzer")
 
-date = input("Enter date (YYYY-MM-DD): ")
+study_date = date.today().isoformat()
 subject = input("Enter subject: ")
 while True:
     try:
@@ -28,6 +29,6 @@ while True:
 
 with open("data/study_log.csv", mode='a', newline="") as file:
     writer = csv.writer(file)
-    writer.writerow([date, subject, duration, time_of_day, focus])
+    writer.writerow([study_date, subject, duration, time_of_day, focus])
 
 print("\nStudy Session recorded")
