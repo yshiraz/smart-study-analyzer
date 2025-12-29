@@ -83,6 +83,40 @@ def show_insights(subject_totals):
         print("\nInsight")
         print("-------------")
         print(f"Most studied subject: {subject} ({minutes} minutes)")
+
+def focus_by_time_of_day(data):
+    focus_data = {}
+
+    for row in data:
+        time_of_day = row[3]
+        focus = int(row[4])
+
+        if time_of_day not in focus_data:
+            focus_data[time_of_day] = {"total_focus": 0, "count": 0}
+
+        focus_data[time_of_day]["total_focus"] += focus
+        focus_data[time_of_day]["count"] += 1
+
+    return focus_data
+
+def average_focus(focus_data):
+    averages = {}
+
+    for time, values in focus_data.items():
+        averages[time] = values["total_focus"] / values["count"]
+
+    return averages
+
+def show_focus_insights(averages):
+    print("\n Focus by Time of Day")
+    print("---------------------------")
+
+    for time, avg in averages.items():
+        print(f"{time}: Average focus = {avg:.2f}")
+
+    best_time = max(averages, key=averages.get)
+    print(f"\n You focus best during: {best_time}")
+
 def main():
     print("Smart Study and Productivity Analyzer")
 
@@ -100,6 +134,10 @@ def main():
     subject_totals = study_time_by_subject(data)
     show_subject_analysis(subject_totals)
     show_insights(subject_totals)
+
+    focus_data = focus_by_time_of_day(data)
+    averages = average_focus(focus_data)
+    show_focus_insights(averages)
     print("\nStudy Session recorded sucessfully")
 
 if __name__ == "__main__":
