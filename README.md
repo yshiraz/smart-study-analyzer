@@ -1,15 +1,28 @@
-# Smart Study & Productivity Analyzer
+# Smart Study Analyzer (CLI)
 
-A CLI-based Python application that helps students track and analyze their study habits.
+A Python-based command-line application that helps students log, analyze, and reflect on their study habits.
 
 ## Features
 - Log daily study sessions
-- Store data in CSV format
-- Simple terminal interface
+- CSV-based persistent storage
+- Input validation
+- Summary statistics
+- Pandas-powered analytics
+- Data visualization
 
-## Tech Stack
+## Technologies Used
 - Python
-- CSV file handling
+- CSV module
+- Pandas
+- Git & GitHub
 
-## Status
-In progress
+## Skills Demonstrated
+- File handling
+- Data analysis
+- Defensive programming
+- CLI application design
+- Version control
+
+## Future Improvements
+- Export reports
+- Machine learning productivity prediction
